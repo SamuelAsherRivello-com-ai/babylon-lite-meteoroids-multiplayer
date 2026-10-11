@@ -229,3 +229,8 @@ project. Award **+1 point for each true answer** (maximum 12 points).
       local state while retaining relevant template exclusions?
 - [ ] Are applicable checks and user-visible behavior verified, with any
       blocked or unverified items clearly reported?
+
+## Recorded project outcomes
+
+See [the item-by-item Asteroids results](docs/template-checklist-results.md). The original checklist wording is retained as a template reference; that results document records verified, not-applicable and unverified outcomes for every item.
+

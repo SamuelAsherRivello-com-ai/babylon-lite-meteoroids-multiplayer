@@ -18,7 +18,17 @@ Screenshots under `docs/screenshots` are captured actual gameplay; capture versi
 
 ## Public game release
 
-Pending deployment and independent verification; a green workflow alone is not gameplay proof.
+Game v0.1.1 release run 38112234658 and Pages run 38112273340 passed. The published game ran for 600 seconds with two independent headless Edge clients. Each opened three sockets (initial plus two planned renewals). The guest received 11,229 authoritative frames. Both observed runs 1–3 and waves 1–8, including natural team elimination and collective restart with no world fixtures. They finished on run 3 with lives [3,3]; guest was 12 ticks behind the host, within the presentation buffer. Public keyboard and host-settings continuity passed, creator departure ended the guest, and there were zero page errors. The DEV game hook was absent from production.
+
+The host probe counts outgoing frames and reflected incoming frames, so its duplicate transition observations are not interpreted as extra gameplay deaths. Guest-only observations provide the natural elimination/reset evidence. Public test instrumentation captured only public world frames, never auth or token messages.
+
+Final acceptance review then added the missing team-score total and an explicit lower-run-ID snapshot guard. Eight tests pass, including a direct receiver regression with an old run and a higher tick. A targeted two-client browser fixture verifies the 100+50 team-score total and rejects a stale run without replacing the current roster. Final v0.1.2 publication and its short public regression are recorded below; the ten-minute renewal evidence belongs specifically to v0.1.1. The transport, hosting, scheduler and renewal logic are unchanged by the final patch.
 
 Fullscreen entered successfully in headless Edge; opening settings neutralized held input. An independent context with WebGPU unavailable showed the expected recovery message and disabled room launch. All seven focused tests also passed under Node 24 locally.
+
+
+Reproducible headless browser scenarios are in asteroids/test/browser. Use Playwright CLI run-code --filename with an existing headless Edge session. The transition harness targets the verified local port 5400 and uses explicit DEV-only fixtures; the public-continuity harness targets the shipped URL, uses only normal controls plus read-only public-frame instrumentation, runs for 600 seconds, and records no auth/token messages. It creates isolated contexts and ends its host room after verification. Run these intentionally against the free service; they are not part of every unit-test invocation.
+
+Published renderer checks observed 1280×720 at DPR 1, 2560×1440 backing at DPR 2, and 1280×720 backing for a 640×360 CSS viewport at DPR 2, with no page errors. Native browser UI zoom and physical mobile hardware remain distinct from these emulated geometry checks.
+
 

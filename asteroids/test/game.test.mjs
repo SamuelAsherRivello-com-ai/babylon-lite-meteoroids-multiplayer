@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { GameSession } from "../src/content/game/session.js";
 import {
   Controls,
   blendEntity,
@@ -73,4 +74,17 @@ test("the pinned release supplies exact wave one, then resets all connected pilo
   assert.equal(w.runId, 2);
   assert.equal(w.wave, 1);
   assert.ok(w.players.every((p) => p.lives === 3 && p.score === 0));
+});
+
+test("guest receiver rejects old-run frames even with a newer tick and accepts the next run", () => {
+  const session = new GameSession(),
+    frame = snapshot(createWorld(42), 1);
+  session.receive({ ...frame, runId: 2, tick: 100 });
+  session.receive({ ...frame, runId: 1, tick: 999 });
+  assert.equal(session.frame.runId, 2);
+  assert.equal(session.frame.tick, 100);
+  session.receive({ ...frame, runId: 2, tick: 99 });
+  assert.equal(session.frame.tick, 100);
+  session.receive({ ...frame, runId: 3, tick: 101 });
+  assert.equal(session.frame.runId, 3);
 });

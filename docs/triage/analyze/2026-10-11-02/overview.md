@@ -8,7 +8,7 @@ Scope: authored game/runtime/docs/workflow material; `.aiignore` and `.triageign
 
 ## Standardization
 
-<meter value="94" min="0" max="100"></meter> 94/100. Canonical instructions, commands, project orientation, definition of done, maintenance relationships and safety boundaries are now discoverable. Six points remain for unavailable original prompt share URL, unverified physical hardware and release evidence still pending at this assessment.
+<meter value="94" min="0" max="100"></meter> 94/100. Canonical instructions, commands, project orientation, definition of done, maintenance relationships and safety boundaries are now discoverable. Six points remain for unavailable original prompt share URL, unverified Codex autocomplete UI and unverified physical hardware/native browser zoom.
 
 ## Architecture
 
@@ -23,3 +23,4 @@ STND01 resolved with evidence: unused showcase modules removed; only the pixel e
 ## OpenSpec handoff
 
 Existing game change owns release/public verification. A later optional `$openspec-propose` may use ARCH01/02 if lifecycle changes justify it. Non-goals: rule changes, alternate hosting, unsolicited refactors. No unresolved product question. Browser touch was emulated; physical-device behavior and suspended-host policy remain outside demonstrated evidence.
+

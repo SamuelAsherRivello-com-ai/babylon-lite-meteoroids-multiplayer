@@ -317,7 +317,10 @@ export function Content() {
             <div>
               <span className="eyebrow">SECTOR</span>
               <strong> {String(f.wave).padStart(2, "0")}</strong>
-              <span className="rocks">{f.asteroids.length} rocks left</span>
+              <span className="rocks">
+                {f.asteroids.length} rocks left ·{" "}
+                {f.players.reduce((total, p) => total + p.score, 0)} team pts
+              </span>
             </div>
             <div className="room">
               <span>

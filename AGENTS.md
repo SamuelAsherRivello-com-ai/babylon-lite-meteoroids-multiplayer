@@ -2,7 +2,7 @@
 
 ## Repository purpose and scope
 
-This repository is a reusable browser app/game template. When a user asks to
+This repository is the generated Asteroids Multiplayer Clone game. The following inherited guidance applies when a user asks to reuse its template foundations. When a user asks to
 use it, first identify the requested mode:
 
 1. **New GitHub repository:** Use GitHub's **Use this template** flow when
@@ -177,4 +177,5 @@ not imply approval to create a pull request.
 ## Asteroids project maintenance
 
 This generated project is Asteroids Multiplayer Clone. See [the architecture and maintenance map](docs/deep-dive-overview.md) for ownership, verified commands, update relationships and definition of done. Keep browser verification headless. The creator owns simulation; guest prediction must never charge damage or advance waves. Use only Vercel Hobby for the backend. Preserve main and unrelated shared-backend work.
+
 

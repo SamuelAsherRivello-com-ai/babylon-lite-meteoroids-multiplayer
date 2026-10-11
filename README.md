@@ -4,7 +4,7 @@ Original pixel-art Asteroids for **1–4 online cooperative players**, built wit
 
 **[Play the live demo](https://samuelasherrivello.github.io/babylon-lite-asteroids-multiplayer-clone/)** · [Releases](https://github.com/SamuelAsherRivello/babylon-lite-asteroids-multiplayer-clone/releases) · [Game brief](docs/game-creation-prompt.md)
 
-![Four pilots sharing one wrapping arena](docs/screenshots/four-player.png)
+![Two pilots in the released cooperative arena](docs/screenshots/public-desktop.png)
 
 Host a flight, copy the invitation, and let friends join during any wave. Guests can leave and rejoin; the creator stays the host. Each pilot has three lives for the whole run. Eliminated pilots spectate surviving teammates. When every connected pilot is eliminated, everyone returns together to wave one after five seconds.
 
@@ -45,11 +45,11 @@ The root `version.txt` is the version source. Dispatch the existing **Release** 
 
 ## Verification and limitations
 
-Seven focused tests cover wrapped interpolation, input ownership/cancellation, pixel anchoring, complete landscape framing, the pinned wave-one/reset contract, and Pages paths. Independent headless Edge clients verified 1–4-player joins, keyboard movement/fire, mid-wave drop, same-tab refresh identity, host settings continuity, and spectator/reset/host loss. A delayed-WebSocket harness exercised approximately 150 ms RTT with ±50 ms jitter and simultaneous emulated touch. Natural shooting cleared wave one; explicit collision/lives fixtures covered the remaining transition edge cases. [Verification evidence](docs/verification.md) distinguishes those checks from public release verification.
+Eight focused tests cover wrapped interpolation, input ownership/cancellation, pixel anchoring, complete landscape framing, the pinned wave-one/reset contract, stale-run rejection, and Pages paths. Independent headless Edge clients verified 1–4-player joins, keyboard movement/fire, mid-wave drop, same-tab refresh identity, host settings continuity, and spectator/reset/host loss. A delayed-WebSocket harness exercised approximately 150 ms RTT with ±50 ms jitter and simultaneous emulated touch. Natural shooting cleared wave one; explicit collision/lives fixtures covered the remaining transition edge cases. [Verification evidence](docs/verification.md) distinguishes those checks from public release verification.
 
 Physical touchscreen hardware, every WebGPU adapter, and suspended-host browser policies are unverified. This is cooperative fixed-host gameplay, not a cheat-resistant server simulation: a malicious host can control its world. Free hosting remains subject to provider quotas. No account, matchmaking service, or persistence across host sessions is included.
 
-![Concurrent touch controls on a narrow landscape viewport](docs/screenshots/touch.png)
+![Touch controls in the released game on a narrow landscape viewport](docs/screenshots/public-touch.png)
 
 ## Credits
 
@@ -131,5 +131,10 @@ Repeated numeric interview replies selected options; the resolved behavior is re
 
 </details>
 
-For a credential-free local backend override, set the build environment variable VITE_ASTEROIDS_ENDPOINT to your own local shared-server URL before running Vite. Production defaults to the verified HTTPS endpoint; no service credential is a client setting.
+For a credential-free local backend override, set the build environment variable `VITE_ASTEROIDS_ENDPOINT` to your own local shared-server URL before running Vite. Production defaults to the verified HTTPS endpoint; no service credential is a client setting.
+
+
+Formatting used: `npx --yes prettier@3.6.2 --write "asteroids/src/**/*.{js,jsx,css}" "asteroids/test/*.mjs" vite.config.js package.json`. The creation quality gate produced [the final triage packet](docs/triage/analyze/2026-10-11-02/overview.md): Standardization 94/100, Architecture 85/100; clock/transport substitution and UI decomposition remain deferred architecture candidates.
+
+
 

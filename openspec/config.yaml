@@ -1,32 +1,14 @@
 schema: spec-driven
-
-# Project context (optional)
-# Add only constraints that should guide OpenSpec artifacts and workflows.
-# Include constraints an agent cannot infer by reading the code.
-# Keep general project documentation and discoverable codebase facts out.
-# Example:
-#   context: |
-#     Designs and tasks must cover Windows, macOS, and Linux
-#     Write all artifacts in Spanish
-
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always state what is out of scope
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
-
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+context: |
+  Asteroids Multiplayer Clone is a landscape 640x360 wrapping, pixel-perfect
+  Babylon Lite WebGPU game for 1–4 cooperative online players.
+  Creator is the fixed simulation host; guests only send input and predict
+  local movement. Guests may hot join/drop and recover private tab identities.
+  Three lives per player span waves; eliminated players spectate. Team defeat
+  automatically restarts all connected pilots after five seconds at wave one.
+  Wave one is exactly three one-hit parents, each splitting into two terminal
+  one-hit children. Later complexity is bounded and roster is sampled per wave.
+  Shared rules/transport are pinned to the verified server v0.9.12 tarball.
+  Use Vercel Hobby only for the shared backend and GitHub Pages for this client.
+  Keep main, preserve unrelated shared-backend changes, and run browser tests
+  headlessly. Root version.txt and existing Release/Pages workflows own delivery.

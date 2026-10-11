@@ -148,7 +148,11 @@ export class GameSession {
     const f = decode(raw),
       now = performance.now(),
       old = this.frame;
-    if (old && f.tick <= old.tick && f.runId === old.runId) return;
+    if (
+      old &&
+      (f.runId < old.runId || (f.runId === old.runId && f.tick <= old.tick))
+    )
+      return;
     this.received = now;
     this.frame = f;
     this.frames.push({ f, at: now });
