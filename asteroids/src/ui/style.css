@@ -1,0 +1,391 @@
+:root {
+  color-scheme: dark;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  color: #d7e5ee;
+  background: #07101c;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+button,
+input {
+  font: inherit;
+}
+button,
+a,
+input {
+  outline-offset: 4px;
+}
+button {
+  cursor: pointer;
+  color: #d7e5ee;
+  background: #142639;
+  border: 1px solid #405266;
+  border-radius: 4px;
+  padding: 0.55em 0.8em;
+}
+button:hover {
+  background: #243e52;
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}
+a {
+  color: #b5c5d3;
+  text-decoration: none;
+}
+a:hover {
+  color: #7af4d3;
+}
+#browser_surface {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: #09101c url("../content/game/art/gutter.png") repeat;
+  background-size: 512px;
+}
+.gutter {
+  position: absolute;
+  overflow: hidden;
+}
+#viewport {
+  position: absolute;
+  overflow: hidden;
+  container-type: size;
+  background: #07101c;
+  box-shadow: 0 0 80px #0007;
+}
+#content_layer,
+#ui_layer,
+.flight {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+#ui_layer {
+  pointer-events: none;
+  z-index: 5;
+}
+.arena {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+.corner {
+  position: absolute;
+  font-size: clamp(8px, 1.4cqw, 13px);
+  letter-spacing: 0.08em;
+  pointer-events: auto;
+}
+.corner_top_left {
+  top: 2.5%;
+  left: 2.5%;
+}
+.corner_top_left span {
+  font-weight: 400;
+  color: #7af4d3;
+}
+.corner_top_right {
+  top: 2.5%;
+  right: 2.5%;
+}
+.corner_bottom_left {
+  bottom: 2.5%;
+  left: 2.5%;
+}
+.corner_bottom_right {
+  bottom: 3.5%;
+  right: 2.5%;
+  color: #8b9cad;
+}
+.corner button {
+  padding: 0.35em 0.65em;
+  background: #0c1b2b;
+}
+.panel {
+  border: 1px solid #334555;
+  background: #091625ec;
+  box-shadow: 0 12px 70px #0006;
+}
+.entry {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  max-width: 540px;
+  padding: 3% 4%;
+  font-size: clamp(8px, 1.35cqw, 13px);
+}
+.eyebrow {
+  font-size: 0.8em;
+  letter-spacing: 0.14em;
+  color: #8298aa;
+}
+h1 {
+  font-size: clamp(20px, 4.6cqw, 44px);
+  line-height: 1.07;
+  letter-spacing: -0.07em;
+  margin: 0.4em 0;
+}
+h1 em {
+  font-style: normal;
+  color: #7af4d3;
+}
+p {
+  line-height: 1.6;
+  color: #a5b9c8;
+  margin: 0.8em 0;
+}
+.entry_actions {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  flex-wrap: wrap;
+}
+.primary {
+  background: #7af4d3;
+  color: #06251e;
+  border-color: #7af4d3;
+  font-weight: bold;
+}
+.primary:hover {
+  background: #afffe9;
+}
+.or {
+  font-size: 0.8em;
+  color: #8298aa;
+}
+.join {
+  display: flex;
+  gap: 0.4em;
+}
+input {
+  min-width: 0;
+  background: #06101b;
+  border: 1px solid #405266;
+  color: #d7e5ee;
+  padding: 0.55em 0.7em;
+  border-radius: 4px;
+}
+.join input {
+  width: 8.5em;
+  letter-spacing: 0.1em;
+}
+.status {
+  color: #ffbd76;
+  min-height: 1.6em;
+}
+.instructions {
+  font-size: 0.8em;
+  color: #7f97a9;
+}
+.flight_hud {
+  position: absolute;
+  left: 2.5%;
+  right: 2.5%;
+  top: 9%;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  font-size: clamp(8px, 1.3cqw, 13px);
+  pointer-events: none;
+}
+.flight_hud strong {
+  font-size: 2em;
+  color: #e5f1f5;
+}
+.rocks {
+  display: block;
+  color: #8fa8ba;
+  margin-top: 0.2em;
+}
+.room {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  pointer-events: auto;
+}
+.room b {
+  color: #7af4d3;
+  letter-spacing: 0.15em;
+}
+.room button {
+  font-size: 0.85em;
+}
+.roster {
+  position: absolute;
+  left: 2.5%;
+  right: 2.5%;
+  top: 23%;
+  display: flex;
+  gap: 1.2em;
+  pointer-events: none;
+  font-size: clamp(7px, 1.05cqw, 11px);
+}
+.pilot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  color: var(--pilot);
+  border-left: 2px solid var(--pilot);
+  padding-left: 0.6em;
+  text-shadow: 0 1px 3px #000;
+}
+.pilot b {
+  font-size: 0.85em;
+}
+.pilot span {
+  letter-spacing: 0.15em;
+}
+.pilot small {
+  font-size: 0.8em;
+  color: #b2c5d1;
+}
+.wave_notice {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1em 1.5em;
+  text-align: center;
+  pointer-events: none;
+  font-size: clamp(9px, 1.5cqw, 15px);
+  max-width: 70%;
+}
+.wave_notice b,
+.wave_notice span {
+  display: block;
+}
+.wave_notice b {
+  color: #7af4d3;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.14em;
+}
+.wave_notice span {
+  font-size: 0.8em;
+  line-height: 1.5;
+}
+.connection_notice {
+  position: absolute;
+  bottom: 17%;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(9px, 1.4cqw, 14px);
+  color: #ffbd76;
+  background: #091625dc;
+  padding: 0.5em;
+}
+.keyboard_hint {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #7f97a9;
+  font-size: clamp(7px, 1.1cqw, 11px);
+  white-space: nowrap;
+}
+.touch_controls {
+  position: absolute;
+  bottom: 12%;
+  left: 3%;
+  right: 3%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.touch_controls > div {
+  display: flex;
+  gap: 8px;
+}
+.touch_button {
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  min-height: 44px;
+  min-width: 44px;
+  background: #102637aa;
+  font-size: clamp(10px, 1.7cqw, 17px);
+}
+.touch_button[data-pressed="true"] {
+  background: #397e73;
+  border-color: #7af4d3;
+}
+.dialog_backdrop {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #020813bb;
+  pointer-events: auto;
+}
+.dialog {
+  width: min(85%, 420px);
+  max-height: 90%;
+  overflow: auto;
+  padding: 1.2em;
+  border: 1px solid #405266;
+  background: #0c1b2b;
+  font-size: clamp(9px, 1.5cqw, 15px);
+}
+.dialog_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.dialog_header h2 {
+  font-size: 1.15em;
+  margin: 0;
+}
+.dialog_body label {
+  display: flex;
+  gap: 0.6em;
+  align-items: center;
+  margin: 0.8em 0;
+}
+.dialog_body input {
+  accent-color: #7af4d3;
+}
+.dialog_body p {
+  font-size: 0.85em;
+}
+.dialog_close {
+  padding: 0.15em 0.5em;
+  font-size: 1.3em;
+}
+.layout_error {
+  padding: 2em;
+}
+@media (max-width: 640px) {
+  .entry {
+    width: 80%;
+    padding: 3%;
+  }
+  .entry_actions {
+    gap: 0.5em;
+  }
+  .entry .instructions {
+    margin-bottom: 0;
+  }
+  .roster {
+    top: 24%;
+    gap: 0.7em;
+  }
+  .touch_controls {
+    bottom: 13%;
+  }
+  .room {
+    gap: 0.35em;
+  }
+}

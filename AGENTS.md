@@ -173,3 +173,8 @@ that it applies to the current task.
 Do not create a pull request unless the user explicitly asks for one in the
 current request. A push, commit, or completed template/OpenSpec workflow does
 not imply approval to create a pull request.
+
+## Asteroids project maintenance
+
+This generated project is Asteroids Multiplayer Clone. See [the architecture and maintenance map](docs/deep-dive-overview.md) for ownership, verified commands, update relationships and definition of done. Keep browser verification headless. The creator owns simulation; guest prediction must never charge damage or advance waves. Use only Vercel Hobby for the backend. Preserve main and unrelated shared-backend work.
+

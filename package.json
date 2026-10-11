@@ -1,14 +1,15 @@
 {
-  "name": "github-repository-template",
+  "name": "babylon-lite-asteroids-multiplayer-clone",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test --test-isolation=none project-name/test/page.test.mjs project-name/test/content.test.mjs"
+    "test": "node --test asteroids/test/*.test.mjs"
   },
   "dependencies": {
+    "@rmc/multiplayer-client": "https://github.com/SamuelAsherRivello/rmc-colyseus-multiplayer-server/releases/download/v0.9.12/rmc-multiplayer-client-0.9.12.tgz",
     "@babylonjs/lite": "1.32.0",
     "@vitejs/plugin-react": "^6.1.1",
     "react": "^19.3.0",

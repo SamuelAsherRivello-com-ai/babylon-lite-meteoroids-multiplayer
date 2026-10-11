@@ -1,160 +1,135 @@
-<!-- AI: Keep commands rooted at the repository. The Vite application, source, tests, and build output belong in project-name/. Work within the following HTML template -->
-<a href="docs/samuel-asher-rivello-banner.png"><img src="docs/samuel-asher-rivello-banner.png" width="640" alt="Banner" /></a>
-<BR>
+# Asteroids Multiplayer Clone
 
-# {project-name}
+Original pixel-art Asteroids for **1–4 online cooperative players**, built with React and Babylon Lite WebGPU.
 
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
+**[Play the live demo](https://samuelasherrivello.github.io/babylon-lite-asteroids-multiplayer-clone/)** · [Releases](https://github.com/SamuelAsherRivello/babylon-lite-asteroids-multiplayer-clone/releases) · [Game brief](docs/game-creation-prompt.md)
 
-<!-- AI: Update this project summary when the template is used. -->
-This is the project repo....
+![Four pilots sharing one wrapping arena](docs/screenshots/four-player.png)
 
-## Original AI Prompt
+Host a flight, copy the invitation, and let friends join during any wave. Guests can leave and rejoin; the creator stays the host. Each pilot has three lives for the whole run. Eliminated pilots spectate surviving teammates. When every connected pilot is eliminated, everyone returns together to wave one after five seconds.
 
-<!-- AI: Populate with the the earliest substantive user prompt that started this project. Replace the placeholder within the <details> below with the original prompt text. -->
+Wave one always has three one-hit asteroids. Each breaks into two one-hit fragments that disappear when shot: nine hits clear the wave. Later waves increase health, speed, and the chance of splitting into three pieces, within entity and health caps. From wave two, difficulty samples the living roster at the start of the wave; mid-wave arrivals never reset or rescale the current rocks. Friendly fire is disabled.
 
-<details>
-<summary>Read the full original prompt</summary>
+## Controls
 
-```text
+| Action | Keyboard | Touch |
+| --- | --- | --- |
+| Rotate | A / D or ← / → | ↶ / ↷ |
+| Thrust | W or ↑ | THRUST |
+| Fire | Space | FIRE |
 
-Create a new project from this template.
+Enable touch controls in Settings. Turn, thrust, and fire work simultaneously. Opening settings releases your input while the shared flight continues. Mute sound or reduce effects there; `?mute=true` always disables audio. Fullscreen is a checkbox in Settings. After a reset, release and press held controls again.
 
-Type: {App | Game}
-Orientation: {Portrait | Landscape}
+## Play and recovery
 
-Project description:
-{Describe the app or game, including its core purpose and important features.}
+Use a current Chrome or Edge browser with WebGPU and hardware acceleration. The landscape arena wraps at every edge and always shows the whole world. Small screens fit it fractionally; larger displays use integer pixel scaling where space permits.
 
-For games:
-Rendering: {2D Pixel Perfect | 3D}
+The host browser owns the world and must remain open and active, including while its pilot spectates. Host departure ends the room; there is no host migration. Browser suspension can stall gameplay and is shown to guests. The Vercel Hobby relay replaces sockets before their connection window expires without replacing the host world.
 
+Guest refresh/rejoin in the **same browser tab** uses a private session-storage identity and preserves score, lives, and elimination. Closing the tab or clearing its storage loses that anonymous identity. A new tab is a new pilot. Reconnecting never displaces four already connected players. Invitations share only a public code; private recovery credentials never appear in URLs.
+
+## Development
+
+Node.js 24 and npm are used in CI. Run these commands from the repository root:
+
+```sh
+npm ci
+npm test
+npm run dev
+npm run build
 ```
 
-</details>
+Open the Vite URL with `/babylon-lite-asteroids-multiplayer-clone/`. The app is in `asteroids/`; production output is `asteroids/dist/`. The production backend is `https://rmc-asteroids-coop.vercel.app`, pinned to [shared server v0.9.12](https://github.com/SamuelAsherRivello/rmc-colyseus-multiplayer-server/releases/tag/v0.9.12). The exact released client tarball is pinned in `package.json` and the lockfile. All backend hosting uses Vercel Hobby and first-party services; no paid hosting or third-party Redis is required.
 
-## Live Demo
+The root `version.txt` is the version source. Dispatch the existing **Release** workflow on main to increment its patch, test/build, commit/tag, and publish. **Deploy live demo** builds and deploys GitHub Pages; dispatch it explicitly after a release bot commit. [Architecture and maintenance](docs/deep-dive-overview.md) explains module ownership and coordinated updates. [Source provenance](docs/source-provenance.md) records the template, shared skills, backend and collision decisions.
 
-<!-- AI: Keep exactly one bullet containing the demo link and no other visible text. Do not mention releases or add other text here. Keep this one link updated to the latest release URL. -->
+## Verification and limitations
 
-- [{live-demo-url}](https://samuelasherrivello.github.io/github-repository-template/)
+Seven focused tests cover wrapped interpolation, input ownership/cancellation, pixel anchoring, complete landscape framing, the pinned wave-one/reset contract, and Pages paths. Independent headless Edge clients verified 1–4-player joins, keyboard movement/fire, mid-wave drop, same-tab refresh identity, host settings continuity, and spectator/reset/host loss. A delayed-WebSocket harness exercised approximately 150 ms RTT with ±50 ms jitter and simultaneous emulated touch. Natural shooting cleared wave one; explicit collision/lives fixtures covered the remaining transition edge cases. [Verification evidence](docs/verification.md) distinguishes those checks from public release verification.
 
+Physical touchscreen hardware, every WebGPU adapter, and suspended-host browser policies are unverified. This is cooperative fixed-host gameplay, not a cheat-resistant server simulation: a malicious host can control its world. Free hosting remains subject to provider quotas. No account, matchmaking service, or persistence across host sessions is included.
 
-## Images
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. Work within the following HTML template -->
-
-<a href="docs/screenshot01.png"><img src="docs/screenshot01.png" width="640" alt="Screenshot placeholder" /></a>
-
-## Table of Contents
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
-
-<!-- AI: Do not include anything above the Table of Contents within the Table of Contents. -->
-1. [Getting Started](#getting-started)
-2. [Project Details](#project-details)
-3. [Deep Dive](#deep-dive)
-4. [Credits](#credits)
-
-## Getting Started
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
-
-<!-- AI: Update this getting-started summary when the template is used. -->
-This is the getting started...
-
-### 🛠 Build Project
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
-
-1. From the repository root, run `npm install`.
-2. Run `npm run build`.
-
-### 🛠 Run Project
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
-
-1. From the repository root, run `npm run dev` and open the localhost URL Vite prints.
-2. Run `npm test` to execute the focused source checks.
-
-### 🛠 Release Version
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
-
-1. Run `npm test` and `npm run build` from the repository root.
-2. Push to `main` to deploy through the GitHub Pages workflow.
-3. Run the **Release** workflow from GitHub Actions to bump the patch version, tag it, and create the GitHub release.
-
-## Project Details
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
-
-<!-- AI: Update these project details when the template is used. -->
-This is the project details...
-
-### 🤖 AI
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
-
-- [AI Overview](docs/ai-overview.md) describes the built-in and optional AI
-  resources.
-
-### 🧠 Deep Dive
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
-
-- [Deep Dive Overview](docs/deep-dive-overview.md) summarizes the project's
-  technical details for developers.
-
-### 📦 Packages
-
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
-
-- [Vite](https://vite.dev/) provides local development and production builds.
-
-### 📝 Structure
-
-<!-- AI: Keep this section to exactly four bullet points. -->
-
-- `docs/` contains canonical README images and project documentation assets.
-- [Layout and game integration](docs/layout-and-game-integration.md) documents viewport configuration, the implemented Babylon Lite showcase, and guidance for adapting the content layer to a game or app.
-- `project-name/index.html` mounts the React browser surface; `project-name/src/` contains viewport, gutter, content, and UI composition.
-- `project-name/test/` contains focused automated checks for the starter.
-
-## Deep Dive
-
-<!-- AI: This is where you want to have one page about the technical details of the project for a developer audience to get a high-level overview of the key three classes and contracts. -->
-
-- To learn more about the technical details, check out the [Deep Dive](docs/deep-dive-overview.md).
+![Concurrent touch controls on a narrow landscape viewport](docs/screenshots/touch.png)
 
 ## Credits
 
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
+Original procedural artwork and synthesized event sounds; no commercial Asteroids assets copied. [Artwork sources](docs/artwork-provenance.md). Gameplay inspiration: [Asteroids (1979)](https://en.wikipedia.org/wiki/Asteroids_(video_game)). Created from [GitHub Repository Template](https://github.com/SamuelAsherRivello/github-repository-template), with [AI Skills Library](https://github.com/SamuelAsherRivello/ai-skills-library), [Babylon Lite](https://www.npmjs.com/package/@babylonjs/lite), and the [shared multiplayer server](https://github.com/SamuelAsherRivello/rmc-colyseus-multiplayer-server). Repository license: [LICENSE](LICENSE); imported skills retain their own notices.
 
-<!-- AI: Preserve established attribution and ownership. Customize the following subsections only from confirmed contributor, contact, and license information; do not infer a new owner from the repository name. -->
-### 💡 Contributors
+## Original AI Prompt
 
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
+Source conversation URL: [{original-ai-prompt-url}]({original-ai-prompt-url}) — **unverified**: no recoverable share URL was supplied. The original contains the Tetris label and dungeon template; the follow-ups below explicitly supersede those gameplay details. The interpreted [creation brief](docs/game-creation-prompt.md) is separate from this quotation.
 
-<!-- AI: Preserve existing contributor credit and add contributors only when confirmed. Do not automatically advance experience counts or their reference year. -->
-- Samuel Asher Rivello - Over 25 years of game development XP (2026)
+<details>
+<summary>Original request and consequential follow-ups</summary>
 
-### 💡 Contact
+```text
+update this template and fully populate it for a multiplayer 2d pixel perfect game of [https://en.wikipedia.org/wiki/Tetris](https://en.wikipedia.org/wiki/Asteroids_(video_game))
 
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
+players can hot join and drop and the world is owned and simulated by the host with asteroids and a wave number. each wave is more complex with asteroids that require more shots before fracturing and each has higher chance to fracture in more pieces. level one is 3 asteroids each that fracture in 2 and each of those destroy without fracturing. when all asteroids are gone the wave advances when the player dies 3 times across any/all waves the game is over. if one player lives longer, the other can spectate until the game restarts at wave one with both of them after both die. the game can be playced with 1/2/3/4 players
 
-<!-- AI: Preserve confirmed contact destinations and their order unless requested otherwise. Use readable display URLs without a protocol or trailing slash while keeping the real link target intact. Do not invent accounts or change target capitalization based on display styling. -->
-- [LinkedIn.com/in/SamuelAsherRivello](https://Linkedin.com/in/SamuelAsherRivello) ⭐ 
-- [GitHub.com/SamuelAsherRivello](https://github.com/SamuelAsherRivello/)
-- [Twitter.com/srivello](https://twitter.com/srivello/)
-- Resume / Portfolio: [SamuelAsherRivello.com](http://www.SamuelAsherRivello.com)
+$ai-skills-create-game
 
+- Title: [Enter the Gungeon Clone]
+- Type: [Multiplayer, online cooperative, 2–4 players. All human players cooperate on the same team.]
+- World and camera:
+  - [Create one 2D level approximately twice the viewport width and twice its height, giving it about four times the area of one screen.]
+  - [The level may be tile-based or use freely placed artwork and geometry.]
+  - [Use a top-down orthographic camera that smoothly follows the local player and stays within the level boundaries.]
+- Core loop: [Cooperate to survive increasingly difficult enemy waves, dodge bullet patterns, collect loot, and choose weapon upgrades between waves. Defeat a boss every five waves. The run ends when the entire team is down.]
+- Controls: [WASD movement, mouse aiming, left-click shooting, and Space to dodge roll with a short cooldown and brief invulnerability.]
+- Cooperative mechanics:
+  - [Create or join a room using a shareable room code, then ready up together.]
+  - [Revive downed teammates, share upgrade rewards, and disable friendly fire.]
+  - [Scale enemy counts and difficulty with the number of active players.]
+  - [Show directional indicators for teammates outside the local camera view.]
+- Look and feel:
+  - [Original pixel-art dungeon scenery with stone floors, destructible props, and readable cover.]
+  - [Distinct player colors, expressive enemies, bright projectiles, punchy muzzle flashes, and clear hit feedback.]
+  - [Keep enemy bullets visually distinct from friendly shots. Show player health, teammate status, current wave, remaining enemies, and dodge cooldown.]
+- Gameplay requirements:
+  - [Include three starting weapons with distinct firing patterns and meaningful upgrades.]
+  - [Include enemies that chase, fire aimed shots, and emit radial bullet patterns.]
+  - [Provide short breaks between waves for upgrades and a team restart option after defeat.]
+- Multiplayer server and smoothness:
+  - [Use https://github.com/SamuelAsherRivello/rmc-colyseus-multiplayer-server or my writable fork: <fork URL, if applicable>.]
+  - [Automatically update the selected server repository with the room logic and synchronized state required by this game.]
+  - [Make the server authoritative for movement validation, combat, enemy spawning, damage, loot, revives, and wave progression.]
+  - [Use supported Colyseus prediction features where available, or implement suitable client-side prediction, server reconciliation, and interpolation.]
+  - [Respond immediately to local movement and dodge inputs. Smooth reconciliation corrections and drive the camera from the predicted local character position to avoid visible jitter.]
+  - [Interpolate remote players and enemies. Use immediate local animations, muzzle flashes, and cosmetic effects while reconciling gameplay outcomes with the server.]
+  - [Use deterministic projectile motion or other bandwidth-efficient synchronization where appropriate.]
+  - [Prioritize a smooth, consistent experience for every player over action density. If synchronization struggles, reduce concurrent bullets, enemies, spawn rates, and firing rates.]
+  - [Handle disconnects and reconnects gracefully.]
+  - [Verify with at least two browser clients, including simulated latency and jitter. Check responsive local movement, stable camera tracking, smooth remote motion, and consistent combat outcomes.]
+- Inspiration links:
+  - [https://store.steampowered.com/app/311690/Enter_the_Gungeon/]
+- Inspiration screenshots: [Attach reference screenshots here.]
+- Originality requirement: [Keep the requested project title, but create original artwork, sounds, characters, weapons, UI, and level layouts; use the reference only for gameplay and visual inspiration.]
+```
 
-### 💡 License
+Follow-ups (quoted separately):
 
-<!-- AI: Do not add more than one sentence of introductory text at the top of this section. -->
+```text
+I meant Asteroids, not Tetris. Rewrite and fully populate the template as a ready-to-copy game creation prompt with all my multiplayer, wave, lives, and spectator requirements. Don’t implement it yet. https://en.wikipedia.org/wiki/Asteroids_(video_game)
 
-<!-- AI: Keep the license name linked to the actual relative license file and verify that its terms match this statement. Keep the copyright holder and year consistent with that file. Do not change license terms, ownership, or dates without an explicit request. -->
-- Provided as-is under the [MIT License](LICENSE).
+1 hot join and hot drop. the multplayer server has that feature. so people can join/ddrop mid level. except he host
 
-- Copyright © 2026 Rivello Multimedia Consulting, LLC.
+stop there.
+
+Now read the $ai-skills-create-game skill and prepare a $openspec-propose about how you will use the template and multiplayer server to meet the needs of the requested prompt. This allows for propose to think more heavily before implemtation.
+
+You have $github access and the multiplayer server has the vercel credentials. there is no reason to stop for any reason until the game is done, and shipped to the readme as a live demo.
+
+continue
+
+you are required to use the free plan of vercel. stop asking for alternatives
+
+when you spawn browser game windows, can you do it minimized or headless and still continue your work? that will be less disruptive to me
+```
+
+Repeated numeric interview replies selected options; the resolved behavior is recorded in the OpenSpec design and creation brief, rather than inventing missing question text here.
+
+</details>
+
+For a credential-free local backend override, set the build environment variable VITE_ASTEROIDS_ENDPOINT to your own local shared-server URL before running Vite. Production defaults to the verified HTTPS endpoint; no service credential is a client setting.
+
