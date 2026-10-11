@@ -226,3 +226,9 @@ The scoped local isolation integration test passed: only `asteroids-coop` is reg
 
 Backend v0.9.12 is shipped at https://rmc-asteroids-coop.vercel.app on Vercel Hobby. Release run 38087006732 and immutable target 5da24eb28d2bcf288cd6320624d94511d01d1b22 passed 154 tests and ten-minute/four-renewal staged continuity. The exact released tarball is pinned in root package/lockfile. See docs/source-provenance.md and docs/verification.md for final contract and actual client evidence. Template generation/bootstrap and shared-skill import are complete; publication of the playable client remains the final delivery gate.
 
+
+## Final delivery evidence
+
+Game v0.1.2 release run 38113057560 and Pages run 38113092628 passed; release commit f249ee8513bebc9d6f36f5804a5e170c24ab2c88 is synchronized locally. Eight Node 24 tests and targeted independent two-client public controls/team-HUD/wave/synchronization/terminal-host checks passed with zero page errors. The earlier published v0.1.1 completed 600 seconds, two planned renewals per client, waves 1–8 and natural collective restarts; the final patch adds only team-total display and an explicit old-run receive guard, covered separately. Details, screenshots, source provenance and triage packets are in docs/. Physical touchscreen hardware, native browser UI zoom and Codex autocomplete UI are explicitly unverified; original prompt share URL remains unavailable. Backend documentation lists the published game, and its Asteroids change is archived separately. Unrelated shared-backend Music edits were preserved outside every Asteroids commit.
+
+

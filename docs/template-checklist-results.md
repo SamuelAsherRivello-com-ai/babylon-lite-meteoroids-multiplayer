@@ -39,7 +39,7 @@ Each numbered item corresponds in order to the source [template usage checklist]
 | 4.3 | Run `openspec doctor --json` from the repository root. Confirm | **verified** | Source, runtime, documentation and delivery checks recorded in docs/verification.md and docs/source-provenance.md. |
 | 4.4 | Reopen Codex at the resulting repository root and verify `$openspec-*` | **unverified** | CLI 1.13.1 generation and doctor are verified; app restart/autocomplete UI was not inspected. |
 | 4.5 | Replace neutral `openspec/config.yaml` context with verified project | **verified** | Source, runtime, documentation and delivery checks recorded in docs/verification.md and docs/source-provenance.md. |
-| 4.6 | Keep `changes/` for active work and `specs/` for accepted specifications. | **verified** | Active game change remains until public continuity passes; supported sync/archive is the final scoped step. |
+| 4.6 | Keep `changes/` for active work and `specs/` for accepted specifications. | **verified** | All five accepted specs validated and the completed game change archived on 2026-10-11. |
 | 5.1 | Search for `project-name`, including paths in configuration and ignore | **verified** | Source, runtime, documentation and delivery checks recorded in docs/verification.md and docs/source-provenance.md. |
 | 5.2 | Run each applicable, documented local setup, test, build, and formatting | **verified** | Source, runtime, documentation and delivery checks recorded in docs/verification.md and docs/source-provenance.md. |
 | 5.3 | Verify README links, screenshots, commands, packages, deployment | **verified** | Source, runtime, documentation and delivery checks recorded in docs/verification.md and docs/source-provenance.md. |
@@ -61,3 +61,4 @@ Each numbered item corresponds in order to the source [template usage checklist]
 | 6.12 | Are applicable checks and user-visible behavior verified, with any | **verified** | Source, runtime, documentation and delivery checks recorded in docs/verification.md and docs/source-provenance.md. |
 
 Template-use scorecard: all twelve section-six answers are true (12/12), subject to the clearly disclosed source-share URL, Codex autocomplete UI and physical-device limitations. Those limitations do not imply unverified public gameplay.
+

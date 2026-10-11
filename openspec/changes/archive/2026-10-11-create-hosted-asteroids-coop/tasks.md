@@ -64,8 +64,10 @@ The user explicitly requested implementation with Playwright after the three-que
 - [x] 7.3 Run the current library's creation-triage analysis gate, apply only authorized bounded behavior-preserving standardization and analyze again; verify final packet/scores and deferred architectural candidates without unsolicited structural refactoring.
 - [x] 7.4 Complete template usage checks and run scoped game tests plus production build; verify Pages subpath assets, endpoint configuration, links and version source, and record each checklist outcome honestly.
 - [x] 7.5 Commit/push only requested files on the default branches and run the adapted game Release/Pages workflows when authorized; verify release tag, release-generated version commit and explicit Pages dispatch if the bot commit does not trigger deployment.
-- [ ] 7.6 Run public two-client gameplay against the published game and verified backend; verify controls, assets, displayed version, hot joining, lives and spectators, and report game/backend releases separately with all remaining limitations.
-- [ ] 7.7 Fetch and safely fast-forward both checkouts, then finalize the completed OpenSpec changes through their supported workflows; verify accepted specs, task completion, clean scoped status and local/remote revision alignment without discarding unrelated work.
+- [x] 7.6 Run public two-client gameplay against the published game and verified backend; verify controls, assets, displayed version, hot joining, lives and spectators, and report game/backend releases separately with all remaining limitations.
+- [x] 7.7 Fetch and safely fast-forward both checkouts, then finalize the completed OpenSpec changes through their supported workflows; verify accepted specs, task completion, clean scoped status and local/remote revision alignment without discarding unrelated work.
+
+
 
 
 

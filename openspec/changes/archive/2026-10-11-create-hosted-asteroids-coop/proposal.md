@@ -37,3 +37,8 @@ None in this newly initialized planning root. Shared-server changes must be reco
 - The inspected backend is version `0.9.9`, uses process-local rooms, and deploys through Vercel. Its four-minute probe does not prove an unlimited run; sustained hosting is a delivery gate, coordinated with `standardize-private-room-flow` rather than assumed complete.
 - This folder originally contained no Git repository or application. No application/server code, remote repository, deployment, commit, or release is created by this proposal.
 - The three follow-up interview decisions are confirmed. Tool compatibility and sustained free-hosting verification remain technical implementation/delivery gates, not permission to reduce the requested scope.
+
+## Delivery status (2026-10-11)
+
+The initial planning-only scope above was superseded by the user's explicit implementation and shipment authorization. Game v0.1.2 and backend v0.9.12 are published and verified. See docs/verification.md for actual browser/CI evidence and its limits. Both use the requested template/server; backend hosting remains Vercel Hobby. No feature branch, PR, paid service, or host migration was introduced.
+

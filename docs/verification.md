@@ -32,3 +32,13 @@ Reproducible headless browser scenarios are in asteroids/test/browser. Use Playw
 Published renderer checks observed 1280×720 at DPR 1, 2560×1440 backing at DPR 2, and 1280×720 backing for a 640×360 CSS viewport at DPR 2, with no page errors. Native browser UI zoom and physical mobile hardware remain distinct from these emulated geometry checks.
 
 
+
+### Final released build: v0.1.2
+
+Release run 38113057560 and Pages run 38113092628 passed at release-generated commit f249ee8513bebc9d6f36f5804a5e170c24ab2c88. Eight Node 24 tests and production build passed in CI. The final public 12-second two-client regression verified displayed v0.1.2, team total, keyboard controls, no production DEV hook, continued host settings simulation, wave two, and terminal host loss, with zero page errors. Both clients ended the check at tick 978/run 1/lives [3,3]. It does not claim to repeat the separate 600-second v0.1.1 continuity run. Screenshots public-desktop.png and public-touch.png now show v0.1.2; public-continuity.png retains the v0.1.1 long-run evidence. Both repositories were synchronized without including unrelated Music documentation edits.
+
+
+## Finalization
+
+Five accepted game specifications passed strict validation and match their deltas. The game change is archived as 2026-10-11-create-hosted-asteroids-coop with all 44 tasks checked after supported archival. Backend add-asteroids-coop is archived separately. Both checkouts include their release-generated commits and preserve unrelated work. Original prompt share URL and Codex autocomplete UI remain unverified; physical touch and native browser UI zoom remain outside tested hardware evidence.
+
