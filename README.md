@@ -1,8 +1,10 @@
-# Asteroids Multiplayer Clone
+# Meteoroids
 
-Original pixel-art Asteroids for **1–4 online cooperative players**, built with React and Babylon Lite WebGPU.
+[![Meteoroids logo with mint and amber ships flying between fractured blue rocks](docs/images/game-logo.png)](docs/game-branding.md)
 
-**[Play the live demo](https://samuelasherrivello.github.io/babylon-lite-asteroids-multiplayer-clone/)** · [Releases](https://github.com/SamuelAsherRivello/babylon-lite-asteroids-multiplayer-clone/releases) · [Game brief](docs/game-creation-prompt.md)
+An original pixel-art space survival game for **1–4 online cooperative players**, built with React and Babylon Lite WebGPU.
+
+**[Play the live demo](https://samuelasherrivello.github.io/babylon-lite-meteoroids-multiplayer/)** · [Releases](https://github.com/SamuelAsherRivello/babylon-lite-meteoroids-multiplayer/releases) · [Game brief](docs/game-creation-prompt.md)
 
 ![Two pilots in the released cooperative arena](docs/screenshots/public-desktop.png)
 
