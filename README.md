@@ -4,7 +4,7 @@
 
 An original pixel-art space survival game for **1–4 online cooperative players**, built with React and Babylon Lite WebGPU.
 
-**[Play the live demo](https://samuelasherrivello.github.io/babylon-lite-meteoroids-multiplayer/)** · [Releases](https://github.com/SamuelAsherRivello/babylon-lite-meteoroids-multiplayer/releases) · [Game brief](docs/game-creation-prompt.md)
+**[Play the live demo](https://samuelasherrivello-com-ai.github.io/babylon-lite-meteoroids-multiplayer/)** · [Releases](https://github.com/SamuelAsherRivello-com-ai/babylon-lite-meteoroids-multiplayer/releases) · [Game brief](docs/game-creation-prompt.md)
 
 ![Two pilots in the released cooperative arena](docs/screenshots/public-desktop.png)
 
