@@ -6,7 +6,7 @@ import { defineConfig } from "vite";
 const repositoryRoot = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  base: "/babylon-lite-asteroids-multiplayer-clone/",
+  base: "/babylon-lite-meteoroids-multiplayer/",
   plugins: [react()],
   root: "asteroids",
   server: {

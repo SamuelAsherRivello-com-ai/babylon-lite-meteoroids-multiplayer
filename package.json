@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run typecheck:config && vite build && node --experimental-strip-types scripts/check-deployment-assets.ts",
     "preview": "vite preview",
-    "test": "node --test asteroids/test/*.test.mjs"
+    "test": "node --test asteroids/test/*.test.mjs asteroids/test/page.test.ts",
+    "typecheck:config": "tsc -p tsconfig.config.json"
   },
   "dependencies": {
     "@rmc/multiplayer-client": "https://github.com/SamuelAsherRivello/rmc-colyseus-multiplayer-server/releases/download/v0.9.12/rmc-multiplayer-client-0.9.12.tgz",
@@ -16,6 +17,8 @@
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "vite": "^8.3.0"
+    "vite": "^8.3.0",
+    "typescript": "5.9.3",
+    "@types/node": "24.19.2"
   }
 }
