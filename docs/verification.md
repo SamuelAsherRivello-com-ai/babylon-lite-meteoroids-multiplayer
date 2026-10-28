@@ -42,3 +42,14 @@ Release run 38113057560 and Pages run 38113092628 passed at release-generated co
 
 Five accepted game specifications passed strict validation and match their deltas. The game change is archived as 2026-10-11-create-hosted-asteroids-coop with all 44 tasks checked after supported archival. Backend add-asteroids-coop is archived separately. Both checkouts include their release-generated commits and preserve unrelated work. Original prompt share URL and Codex autocomplete UI remain unverified; physical touch and native browser UI zoom remain outside tested hardware evidence.
 
+## Current source layout: square game view with right HUD
+
+The `left-game-right-hud-layout` change was verified locally in headless Microsoft Edge against the one Vite preview on October 28, 2026. The browser exposed WebGPU and reported an NVIDIA GeForce RTX 4070 Laptop GPU through Direct3D 11.
+
+- Layout checks at 1280×720, 844×390, and 390×844 confirmed a square game region, a non-overlapping right panel, no document overflow, and a centered 16:9 arena frame. The fullscreen settings control entered fullscreen with the same non-overlapping layout.
+- At DPR 2, a 390×219 CSS-pixel arena canvas used a 780×438 backing store.
+- The two-client transition scenario verified ArrowLeft/ArrowUp/Space controls, concurrent rotate/thrust/fire touch input and cancellation, natural wave progression, spectator continuity, collective reset, and creator departure. The host reached wave two with score 800 and three lives; the reset restored both players to three lives and zero score.
+- `npm test` passed all eight tests, the production build passed, and the OpenSpec change passed strict validation. Local Node was v26.7; Node 24 CI and public Pages checks were not rerun for this unreleased layout change.
+
+`layout-gameplay.png` is the current source screenshot. The public screenshots and live game above remain evidence for their already released layouts until a later release is deployed.
+

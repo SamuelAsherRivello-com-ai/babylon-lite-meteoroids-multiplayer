@@ -6,7 +6,9 @@ An original pixel-art space survival game for **1–4 online cooperative players
 
 **[Play the live demo](https://samuelasherrivello-com-ai.github.io/babylon-lite-meteoroids-multiplayer/)** · [Releases](https://github.com/SamuelAsherRivello-com-ai/babylon-lite-meteoroids-multiplayer/releases) · [Game brief](docs/game-creation-prompt.md)
 
-![Two pilots in the released cooperative arena](docs/screenshots/public-desktop.png)
+![Current source layout with the square game view on the left and HUD on the right](docs/screenshots/layout-gameplay.png)
+
+The screenshot shows the current source layout. The live demo remains on its previously published version until a release is deployed.
 
 Host a flight, copy the invitation, and let friends join during any wave. Guests can leave and rejoin; the creator stays the host. Each pilot has three lives for the whole run. Eliminated pilots spectate surviving teammates. When every connected pilot is eliminated, everyone returns together to wave one after five seconds.
 
@@ -24,7 +26,7 @@ Enable touch controls in Settings. Turn, thrust, and fire work simultaneously. O
 
 ## Play and recovery
 
-Use a current Chrome or Edge browser with WebGPU and hardware acceleration. The landscape arena wraps at every edge and always shows the whole world. Small screens fit it fractionally; larger displays use integer pixel scaling where space permits.
+Use a current Chrome or Edge browser with WebGPU and hardware acceleration. The landscape app places the square game view on the left and the HUD, room actions, settings, and enabled touch controls on the right. The existing 640 × 360 world stays fully visible inside the game view, wraps at every edge, and keeps its logical bounds across resize, browser zoom, DPR, and fullscreen changes.
 
 The host browser owns the world and must remain open and active, including while its pilot spectates. Host departure ends the room; there is no host migration. Browser suspension can stall gameplay and is shown to guests. The Vercel Hobby relay replaces sockets before their connection window expires without replacing the host world.
 

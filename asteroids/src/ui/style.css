@@ -23,6 +23,10 @@ a,
 input {
   outline-offset: 4px;
 }
+::selection {
+  color: #07101c;
+  background: #7af4d3;
+}
 button {
   cursor: pointer;
   color: #d7e5ee;
@@ -44,6 +48,8 @@ a {
 }
 a:hover {
   color: #7af4d3;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 #root { width: 100%; height: 100%; }
 .surface-shell {
@@ -63,48 +69,92 @@ a:hover {
   background: #09101c url("../content/game/art/gutter.png") repeat;
   background-size: 512px;
 }
-.gutter {
-  position: absolute;
-  overflow: hidden;
-}
-.gutter_left {
-  background: #050a16 url("../content/game/art/gutters/left.webp") center / cover no-repeat;
-}
-.gutter_right {
-  background: #050a16 url("../content/game/art/gutters/right.webp") center / cover no-repeat;
-}
-.gutter-border {
+#app_composition {
   position: absolute;
   top: 0;
-  bottom: 0;
-  width: 9px;
-  background: linear-gradient(90deg, #12213a, #7c95bf 42%, #202548 72%, #070d16);
-  box-shadow: 0 0 14px #748aff77;
 }
-.gutter_left .gutter-border {
-  right: 0;
-}
-.gutter_right .gutter-border {
-  left: 0;
-  transform: scaleX(-1);
-}
-#viewport {
+#game_region {
   position: absolute;
+  top: var(--game-y);
+  left: 0;
+  width: var(--game-size);
+  height: var(--game-size);
+  display: grid;
+  place-items: center;
   overflow: hidden;
-  container-type: size;
-  background: #07101c;
-  box-shadow: 0 0 80px #0007;
+  background: #07101c url("../content/game/art/starfield.png") center / cover no-repeat;
+  box-shadow: 0 12px 40px #0008;
+}
+.arena_frame {
+  position: relative;
+  width: 100%;
+  max-height: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+#hud_panel {
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: var(--panel-x);
+  width: var(--panel-width);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  padding: clamp(10px, 1.5vw, 22px);
+  background: #091625;
+  border: 1px solid #263c50;
+  font-size: clamp(9px, 0.9vw, 13px);
+}
+.panel_header,
+.panel_footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7em;
+}
+.panel_header {
+  flex: 0 0 auto;
+  padding-bottom: 1.2em;
+  border-bottom: 1px solid #263c50;
+}
+.panel_brand {
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+.panel_brand span {
+  color: #7af4d3;
+  font-weight: 400;
+}
+.panel_link {
+  white-space: nowrap;
+  font-size: 0.85em;
+}
+.panel_footer {
+  flex: 0 0 auto;
+  margin-top: auto;
+  padding-top: 1em;
+  border-top: 1px solid #263c50;
+}
+.panel_footer button {
+  padding: 0.4em 0.65em;
+}
+.panel_version {
+  color: #8b9cad;
+  font-variant-numeric: tabular-nums;
+}
+#content_panel {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-color: #405266 #091625;
 }
 #content_layer,
-#ui_layer,
 .flight {
   position: absolute;
   inset: 0;
   overflow: hidden;
-}
-#ui_layer {
-  pointer-events: none;
-  z-index: 5;
 }
 .arena {
   display: block;
@@ -112,51 +162,18 @@ a:hover {
   height: 100%;
   image-rendering: pixelated;
 }
-.corner {
-  position: absolute;
-  font-size: clamp(8px, 1.4cqw, 13px);
-  letter-spacing: 0.08em;
-  pointer-events: auto;
-}
-.corner_top_left {
-  top: 2.5%;
-  left: 2.5%;
-}
-.corner_top_left span {
-  font-weight: 400;
-  color: #7af4d3;
-}
-.corner_top_right {
-  top: 2.5%;
-  right: 2.5%;
-}
-.corner_bottom_left {
-  bottom: 2.5%;
-  left: 2.5%;
-}
-.corner_bottom_right {
-  bottom: 3.5%;
-  right: 2.5%;
-  color: #8b9cad;
-}
-.corner button {
-  padding: 0.35em 0.65em;
-  background: #0c1b2b;
-}
 .panel {
   border: 1px solid #334555;
   background: #091625ec;
   box-shadow: 0 12px 70px #0006;
 }
 .entry {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  max-width: 540px;
-  padding: 3% 4%;
-  font-size: clamp(8px, 1.35cqw, 13px);
+  width: 100%;
+  padding: 0.9em 0 1em;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  font-size: inherit;
 }
 .eyebrow {
   font-size: 0.8em;
@@ -164,9 +181,9 @@ a:hover {
   color: #8298aa;
 }
 h1 {
-  font-size: clamp(20px, 4.6cqw, 44px);
+  font-size: clamp(18px, 2.2vw, 30px);
   line-height: 1.07;
-  letter-spacing: -0.07em;
+  letter-spacing: -0.03em;
   margin: 0.4em 0;
 }
 h1 em {
@@ -180,9 +197,9 @@ p {
 }
 .entry_actions {
   display: flex;
-  align-items: center;
-  gap: 0.7em;
-  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 0.6em;
 }
 .primary {
   background: #7af4d3;
@@ -208,6 +225,7 @@ input {
   color: #d7e5ee;
   padding: 0.55em 0.7em;
   border-radius: 4px;
+  caret-color: #7af4d3;
 }
 .join input {
   width: 8.5em;
@@ -222,15 +240,12 @@ input {
   color: #7f97a9;
 }
 .flight_hud {
-  position: absolute;
-  left: 2.5%;
-  right: 2.5%;
-  top: 9%;
   display: flex;
-  align-items: start;
-  justify-content: space-between;
-  font-size: clamp(8px, 1.3cqw, 13px);
-  pointer-events: none;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.8em;
+  padding: 0.9em 0;
+  border-bottom: 1px solid #263c50;
 }
 .flight_hud strong {
   font-size: 2em;
@@ -244,8 +259,8 @@ input {
 .room {
   display: flex;
   align-items: center;
-  gap: 0.7em;
-  pointer-events: auto;
+  flex-wrap: wrap;
+  gap: 0.5em;
 }
 .room b {
   color: #7af4d3;
@@ -255,26 +270,22 @@ input {
   font-size: 0.85em;
 }
 .roster {
-  position: absolute;
-  left: 2.5%;
-  right: 2.5%;
-  top: 23%;
   display: flex;
+  flex-direction: column;
   gap: 1.2em;
-  pointer-events: none;
-  font-size: clamp(7px, 1.05cqw, 11px);
+  padding: 1em 0;
+  font-size: 0.9em;
 }
 .pilot {
   display: flex;
   flex-direction: column;
   gap: 0.3em;
   color: var(--pilot);
-  border-left: 2px solid var(--pilot);
-  padding-left: 0.6em;
-  text-shadow: 0 1px 3px #000;
+  padding-left: 0.2em;
 }
 .pilot b {
   font-size: 0.85em;
+  color: var(--pilot);
 }
 .pilot span {
   letter-spacing: 0.15em;
@@ -284,15 +295,13 @@ input {
   color: #b2c5d1;
 }
 .wave_notice {
-  position: absolute;
-  top: 53%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 0.5em 0;
   padding: 1em 1.5em;
-  text-align: center;
-  pointer-events: none;
-  font-size: clamp(9px, 1.5cqw, 15px);
-  max-width: 70%;
+  text-align: left;
+  font-size: 1em;
+  border-color: #405266;
+  background: #0c1b2b;
+  box-shadow: none;
 }
 .wave_notice b,
 .wave_notice span {
@@ -308,45 +317,41 @@ input {
   line-height: 1.5;
 }
 .connection_notice {
-  position: absolute;
-  bottom: 17%;
   width: 100%;
-  text-align: center;
-  font-size: clamp(9px, 1.4cqw, 14px);
+  text-align: left;
+  font-size: 1em;
   color: #ffbd76;
   background: #091625dc;
   padding: 0.5em;
 }
+.connection_notice[data-state="Connected"] {
+  color: #7af4d3;
+}
 .keyboard_hint {
-  position: absolute;
-  bottom: 4%;
-  left: 50%;
-  transform: translateX(-50%);
+  padding: 1em 0;
+  border-top: 1px solid #263c50;
   color: #7f97a9;
-  font-size: clamp(7px, 1.1cqw, 11px);
-  white-space: nowrap;
+  font-size: 0.8em;
 }
 .touch_controls {
-  position: absolute;
-  bottom: 12%;
-  left: 3%;
-  right: 3%;
   display: flex;
-  justify-content: space-between;
-  pointer-events: none;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  padding: 1em 0;
+  border-top: 1px solid #263c50;
 }
 .touch_controls > div {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 .touch_button {
-  pointer-events: auto;
   touch-action: none;
   user-select: none;
   min-height: 44px;
   min-width: 44px;
   background: #102637aa;
-  font-size: clamp(10px, 1.7cqw, 17px);
+  font-size: 1em;
 }
 .touch_button[data-pressed="true"] {
   background: #397e73;
@@ -361,13 +366,13 @@ input {
   pointer-events: auto;
 }
 .dialog {
-  width: min(85%, 420px);
+  width: min(92%, 420px);
   max-height: 90%;
   overflow: auto;
   padding: 1.2em;
   border: 1px solid #405266;
   background: #0c1b2b;
-  font-size: clamp(9px, 1.5cqw, 15px);
+  font-size: clamp(10px, 1vw, 14px);
 }
 .dialog_header {
   display: flex;
@@ -395,26 +400,18 @@ input {
   padding: 0.15em 0.5em;
   font-size: 1.3em;
 }
-.layout_error {
-  padding: 2em;
-}
 @media (max-width: 640px) {
-  .entry {
-    width: 80%;
-    padding: 3%;
-  }
   .entry_actions {
     gap: 0.5em;
   }
-  .entry .instructions {
-    margin-bottom: 0;
+  #hud_panel {
+    padding: 8px;
+    font-size: 10px;
   }
-  .roster {
-    top: 24%;
-    gap: 0.7em;
-  }
-  .touch_controls {
-    bottom: 13%;
+  .panel_header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.45em;
   }
   .room {
     gap: 0.35em;

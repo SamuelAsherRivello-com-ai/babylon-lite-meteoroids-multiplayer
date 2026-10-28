@@ -30,32 +30,35 @@ export function App({ content, contentPresentation }) {
   return (
     <ContentShellProvider paused={open}>
       <BrowserSurface
-        ui={
+        header={
           <>
-            <div className="corner corner_top_left">
-              <b>
-                ASTEROIDS <span>CO-OP</span>
-              </b>
-            </div>
-            <div className="corner corner_top_right">
-              <a
-                href="https://github.com/SamuelAsherRivello/babylon-lite-asteroids-multiplayer-clone"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub ↗
-              </a>
-            </div>
-            <div className="corner corner_bottom_left">
-              <button onClick={() => setOpen(true)}>Settings</button>
-            </div>
-            <div className="corner corner_bottom_right">
+            <b className="panel_brand">
+              ASTEROIDS <span>CO-OP</span>
+            </b>
+            <a
+              className="panel_link"
+              href="https://github.com/SamuelAsherRivello/babylon-lite-asteroids-multiplayer-clone"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub ↗
+            </a>
+          </>
+        }
+        footer={
+          <>
+            <button onClick={() => setOpen(true)}>Settings</button>
+            <span className="panel_version">
               v
               {versionText
                 .trim()
                 .replace(/^version=/, "")
                 .replace(/^v/, "")}
-            </div>
+            </span>
+          </>
+        }
+        ui={
+          <>
             {open && (
               <Dialog title="Flight settings" onClose={() => setOpen(false)}>
                 <label>

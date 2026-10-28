@@ -1,13 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { defaultLayout, fitViewport } from "../src/ui/layout.js";
+import { fitAppLayout } from "../src/ui/layout.js";
 import {
   BabylonLiteAIEntry as Entry,
   BabylonLiteMode,
 } from "../src/content/babylon/pixel-grid-entry.js";
 import { createGridSpriteAtlas, createSprite2DLayer } from "@babylonjs/lite";
 
-test("fixed portrait framing remains complete at desktop, narrow mobile, and zoomed sizes", () => {
+test("square game region and right HUD fit desktop, narrow, portrait, and zoomed sizes", () => {
   for (const [w, h] of [
     [1920, 1080],
     [844, 390],
@@ -15,9 +15,15 @@ test("fixed portrait framing remains complete at desktop, narrow mobile, and zoo
     [640, 360],
     [500, 280],
   ]) {
-    const r = fitViewport(w, h, defaultLayout);
-    assert.ok(r.width <= w && r.height <= h + 0.001);
-    assert.ok(Math.abs(r.width / r.height - 9 / 16) < 0.001);
+    const r = fitAppLayout(w, h);
+    const gameRight = r.x + r.gameSize,
+      panelLeft = r.x + r.panelX,
+      panelRight = panelLeft + r.panelWidth;
+    assert.ok(r.gameSize <= h && r.gameSize <= w);
+    assert.ok(Math.abs(r.width - r.gameSize - r.gap - r.panelWidth) < 0.001);
+    assert.ok(gameRight <= panelLeft + 0.001);
+    assert.ok(panelRight <= w + 0.001);
+    assert.ok(r.gameSize >= 0 && r.panelWidth > 0);
   }
 });
 test("entry snaps projected anchors while preserving fractional simulation positions", () => {

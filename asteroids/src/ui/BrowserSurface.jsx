@@ -1,25 +1,21 @@
-import { useLayoutEffect, useRef, useState } from "react";
-import { defaultLayout, fitViewport, validateLayout } from "./layout.js";
+import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { ContentPanelProvider } from "../shared/ContentShellContext.jsx";
+import { fitAppLayout } from "./layout.js";
 import { fitPresentationFrame } from "./presentation.js";
 
-function rectangle(x, y, width, height) {
-  return { left: x, top: y, width, height };
-}
-
-export function BrowserSurface({
-  layout = defaultLayout,
-  children,
-  ui,
-  gutters = {},
-  onViewportResize,
-}) {
+export function BrowserSurface({ children, header, footer, ui }) {
   const surfaceRef = useRef(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
-  const [fullscreen, setFullscreen] = useState(() => typeof document !== "undefined" && Boolean(document.fullscreenElement));
+  const [panelTarget, setPanelTarget] = useState(null);
+  const attachPanel = useCallback(setPanelTarget, []);
+  const [fullscreen, setFullscreen] = useState(
+    () => typeof document !== "undefined" && Boolean(document.fullscreenElement),
+  );
   const [screenSize, setScreenSize] = useState(() => ({
     width: typeof window === "undefined" ? 0 : window.innerWidth,
     height: typeof window === "undefined" ? 0 : window.innerHeight,
   }));
+
   useLayoutEffect(() => {
     const sync = () => {
       setFullscreen(Boolean(document.fullscreenElement));
@@ -32,6 +28,7 @@ export function BrowserSurface({
       document.removeEventListener("fullscreenchange", sync);
     };
   }, []);
+
   useLayoutEffect(() => {
     const surface = surfaceRef.current;
     const measure = () =>
@@ -42,74 +39,49 @@ export function BrowserSurface({
     return () => observer.disconnect();
   }, []);
 
-  useLayoutEffect(() => {
-    const viewport = document.getElementById("viewport");
-    if (viewport && onViewportResize) {
-      const update = () => onViewportResize(viewport.getBoundingClientRect());
-      update();
-      const observer = new ResizeObserver(update);
-      observer.observe(viewport);
-      return () => observer.disconnect();
-    }
-    return undefined;
-  }, [size, layout, onViewportResize]);
-
-  let error;
-  try {
-    validateLayout(layout);
-  } catch (failure) {
-    error = failure.message;
-  }
-  const frame = fullscreen ? fitPresentationFrame(screenSize.width, screenSize.height) : null;
-  const surfaceStyle = {
-    ...(frame ? { width: `${frame.width}px`, height: `${frame.height}px` } : {}),
-    ...(layout.gutterBackground ? { "--gutter-color": layout.gutterBackground } : {}),
-  };
-  const viewport = error ? null : fitViewport(size.width, size.height, layout);
-  const regions = viewport && {
-    top: rectangle(0, 0, size.width, viewport.y),
-    bottom: rectangle(0, viewport.y + viewport.height, size.width, viewport.y),
-    left: rectangle(0, viewport.y, viewport.x, viewport.height),
-    right: rectangle(
-      viewport.x + viewport.width,
-      viewport.y,
-      viewport.x,
-      viewport.height,
-    ),
-  };
+  const frame = fullscreen
+    ? fitPresentationFrame(screenSize.width, screenSize.height)
+    : null;
+  const layout = fitAppLayout(size.width, size.height);
 
   return (
     <div className="surface-shell">
-      <div ref={surfaceRef} id="browser_surface" style={surfaceStyle} data-fullscreen={fullscreen}>
-        {error ? (
-          <div className="layout_error" role="alert">{error}</div>
-        ) : (
-          <>
-            {Object.entries(regions).map(([side, style]) => (
-              <div key={side} className={`gutter gutter_${side}`} style={style}>
-                {gutters[side]}
-                {(side === "left" || side === "right") && (
-                  <span className="gutter-border" aria-hidden="true" />
-                )}
-              </div>
-            ))}
-            <div
-              id="viewport"
-              data-orientation={layout.orientation}
-              style={{
-                ...rectangle(viewport.x, viewport.y, viewport.width, viewport.height),
-                "--project-viewport-width": `${viewport.width}px`,
-                "--project-viewport-height": `${viewport.height}px`,
-              }}
-            >
-              {/* Selected content mounts beneath the independent UI layer. Content and renderer
-                integrations own their backing resolution and lifecycle while the viewport stays
-                in CSS pixels. See the integration guide for current renderer examples. */}
-              <div id="content_layer">{children}</div>
-              <div id="ui_layer">{ui}</div>
+      <div
+        ref={surfaceRef}
+        id="browser_surface"
+        data-fullscreen={fullscreen}
+        style={
+          frame
+            ? { width: `${frame.width}px`, height: `${frame.height}px` }
+            : undefined
+        }
+      >
+        <div
+          id="app_composition"
+          style={{
+            left: layout.x,
+            width: layout.width,
+            height: layout.height,
+            "--game-size": `${layout.gameSize}px`,
+            "--game-y": `${layout.gameY}px`,
+            "--panel-x": `${layout.panelX}px`,
+            "--panel-width": `${layout.panelWidth}px`,
+          }}
+        >
+          <section id="game_region" aria-label="Asteroids game">
+            <div className="arena_frame">
+              <ContentPanelProvider target={panelTarget}>
+                <div id="content_layer">{children}</div>
+              </ContentPanelProvider>
             </div>
-          </>
-        )}
+          </section>
+          <aside id="hud_panel" aria-label="Game information and controls">
+            <div className="panel_header">{header}</div>
+            <div id="content_panel" ref={attachPanel} />
+            <div className="panel_footer">{footer}</div>
+            {ui}
+          </aside>
+        </div>
       </div>
     </div>
   );

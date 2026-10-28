@@ -6,6 +6,7 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
+import { createPortal } from "react-dom";
 import { useContentShell } from "../shared/ContentShellContext.jsx";
 import { GameSession } from "./game/session.js";
 import { createArenaRenderer } from "./game/renderer.js";
@@ -79,7 +80,7 @@ export function Content() {
   const { prefs } = useContext(Preferences),
     prefsRef = useRef(prefs);
   prefsRef.current = prefs;
-  const { paused } = useContentShell();
+  const { paused, panelTarget } = useContentShell();
   const canvas = useRef(null),
     [ready, setReady] = useState(false),
     [error, setError] = useState(""),
@@ -246,15 +247,19 @@ export function Content() {
     </button>
   );
   return (
-    <main className="flight">
+    <>
+      <main className="flight">
       <canvas
         className="arena"
         ref={canvas}
         aria-label="Asteroids cooperative wrapping arena"
       />
+      </main>
+      {panelTarget &&
+        createPortal(
+          <div className="game_panel_content">
       {(!state.connected || error) && (
         <section className="entry panel" aria-label="Flight room">
-          <div className="eyebrow">ONE ARENA · UP TO FOUR PILOTS</div>
           <h1>
             SHARE THE
             <br />
@@ -313,7 +318,7 @@ export function Content() {
       )}
       {state.connected && f && (
         <>
-          <div className="flight_hud">
+          <section className="flight_hud" aria-label="Flight status">
             <div>
               <span className="eyebrow">SECTOR</span>
               <strong> {String(f.wave).padStart(2, "0")}</strong>
@@ -331,7 +336,7 @@ export function Content() {
                 {state.host ? "End flight" : "Leave"}
               </button>
             </div>
-          </div>
+          </section>
           <div className="roster" aria-label="Pilot status">
             {f.players.map((p) => (
               <div
@@ -374,11 +379,13 @@ export function Content() {
               </span>
             </div>
           )}
-          {state.status !== "Connected" && (
-            <div className="connection_notice" role="status">
-              {state.status}
-            </div>
-          )}
+          <div
+            className="connection_notice"
+            data-state={state.status}
+            role="status"
+          >
+            CONNECTION · {state.status}
+          </div>
           {prefs.touch && (
             <div className="touch_controls">
               <div>
@@ -396,6 +403,9 @@ export function Content() {
           )}
         </>
       )}
-    </main>
+          </div>,
+          panelTarget,
+        )}
+    </>
   );
 }

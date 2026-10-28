@@ -1,42 +1,4 @@
-// Change these presets to update the template's supported aspect ratios in one place.
-// Layout dimensions are CSS-pixel ratios; the content integration owns engine-specific render and backing resolutions.
-export const aspectRatioPresets = Object.freeze({
-  landscape: Object.freeze({ width: 16, height: 9, label: "16:9" }),
-  portrait: Object.freeze({ width: 9, height: 16, label: "9:16" }),
-});
-
-export const defaultLayout = Object.freeze({
-  orientation: "portrait",
-  ...aspectRatioPresets.portrait,
-});
-
-export function validateLayout(layout) {
-  const { width, height, orientation } = layout;
-  if (![width, height].every((value) => Number.isFinite(value) && value > 0)) {
-    throw new Error(
-      "Viewport width and height must be finite positive numbers; for example, 16 and 9.",
-    );
-  }
-  const matches = {
-    portrait: width < height,
-    landscape: width > height,
-    square: width === height,
-  };
-  if (!Object.hasOwn(matches, orientation) || !matches[orientation]) {
-    throw new Error(
-      "Viewport orientation must match its ratio: portrait width < height, landscape width > height, or square width = height.",
-    );
-  }
-  if (!Number.isFinite(width / height) || width / height <= 0) {
-    throw new Error(
-      "Viewport ratio is outside the supported numeric range; use smaller ratio dimensions.",
-    );
-  }
-  return layout;
-}
-
-export function fitViewport(surfaceWidth, surfaceHeight, layout) {
-  validateLayout(layout);
+export function fitAppLayout(surfaceWidth, surfaceHeight) {
   if (
     ![surfaceWidth, surfaceHeight].every(
       (value) => Number.isFinite(value) && value >= 0,
@@ -46,13 +8,33 @@ export function fitViewport(surfaceWidth, surfaceHeight, layout) {
       "Browser surface dimensions must be finite nonnegative CSS pixel values.",
     );
   }
-  const ratio = layout.width / layout.height;
-  const width = Math.min(surfaceWidth, surfaceHeight * ratio);
-  const height = width / ratio;
+
+  const gap = Math.min(24, Math.max(12, surfaceWidth * 0.03));
+  const inset = Math.min(24, Math.max(8, surfaceWidth * 0.03));
+  const minGameSize = Math.min(surfaceHeight, Math.max(96, surfaceWidth * 0.28));
+  const preferredPanelWidth = Math.min(
+    420,
+    Math.max(160, Math.min(surfaceWidth * 0.34, surfaceHeight * 0.55)),
+  );
+  const panelWidth = Math.min(
+    preferredPanelWidth,
+    Math.max(120, surfaceWidth - minGameSize - gap - inset * 2),
+  );
+  const gameSize = Math.max(
+    0,
+    Math.min(surfaceHeight, surfaceWidth - panelWidth - gap - inset * 2),
+  );
+  const contentWidth = gameSize + gap + panelWidth;
+
   return {
-    width,
-    height,
-    x: (surfaceWidth - width) / 2,
-    y: (surfaceHeight - height) / 2,
+    x: (surfaceWidth - contentWidth) / 2,
+    y: 0,
+    width: contentWidth,
+    height: surfaceHeight,
+    gameSize,
+    gameY: (surfaceHeight - gameSize) / 2,
+    panelWidth,
+    gap,
+    panelX: gameSize + gap,
   };
 }
