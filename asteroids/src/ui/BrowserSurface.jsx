@@ -74,6 +74,9 @@ export function BrowserSurface({
           {Object.entries(regions).map(([side, style]) => (
             <div key={side} className={`gutter gutter_${side}`} style={style}>
               {gutters[side]}
+              {(side === "left" || side === "right") && (
+                <span className="gutter-border" aria-hidden="true" />
+              )}
             </div>
           ))}
           <div

@@ -19,7 +19,10 @@ import {
   BabylonLiteMode,
 } from "../babylon/pixel-grid-entry.js";
 import spritesUrl from "./art/sprites.png?url";
-import starsUrl from "./art/starfield.png?url";
+import starsUrl from "./art/starfield-portrait.png?url";
+const VIEW_WIDTH = 360;
+const VIEW_HEIGHT = 640;
+const projectPoint = (x, y) => [((VIEW_WIDTH - y) % VIEW_WIDTH + VIEW_WIDTH) % VIEW_WIDTH, ((x % VIEW_HEIGHT) + VIEW_HEIGHT) % VIEW_HEIGHT];
 const textureOptions = {
   invertY: false,
   minFilter: "nearest",
@@ -70,8 +73,8 @@ export async function createArenaRenderer(
       }
     }
     const stars = createGridSpriteAtlas(textures[0], {
-      cellWidthPx: 640,
-      cellHeightPx: 360,
+      cellWidthPx: VIEW_WIDTH,
+      cellHeightPx: VIEW_HEIGHT,
       columns: 1,
       rows: 1,
       pivot: [0.5, 0.5],
@@ -88,16 +91,16 @@ export async function createArenaRenderer(
       layer = createSprite2DLayer(atlas);
     for (const l of [bg, layer]) {
       Entry.updateView(l, { zoom: 1 });
-      Entry.centerView(l, 320, 180, 640, 360);
+      Entry.centerView(l, VIEW_WIDTH / 2, VIEW_HEIGHT / 2, VIEW_WIDTH, VIEW_HEIGHT);
     }
     Entry.addSprite(bg, {
-      positionPx: [320, 180],
-      sizePx: [640, 360],
+      positionPx: [VIEW_WIDTH / 2, VIEW_HEIGHT / 2],
+      sizePx: [VIEW_WIDTH, VIEW_HEIGHT],
       frame: 0,
     });
     const surface = Object.create(engine);
     Object.defineProperty(surface, "canvas", {
-      value: { width: 640, height: 360 },
+      value: { width: VIEW_WIDTH, height: VIEW_HEIGHT },
     });
     const worldRenderer = createSpriteRenderer(surface, {
       layers: [bg, layer],
@@ -105,13 +108,13 @@ export async function createArenaRenderer(
       clearValue: { r: 0.02, g: 0.04, b: 0.08, a: 1 },
     });
     renderers.push(worldRenderer);
-    const target = createRenderTexture2D(engine, 640, 360, textureOptions);
+    const target = createRenderTexture2D(engine, VIEW_WIDTH, VIEW_HEIGHT, textureOptions);
     textures.push(target);
     setSpriteRendererTarget(worldRenderer, target);
     registerSpriteRenderer(worldRenderer);
     const presentationAtlas = createGridSpriteAtlas(target, {
-      cellWidthPx: 640,
-      cellHeightPx: 360,
+      cellWidthPx: VIEW_WIDTH,
+      cellHeightPx: VIEW_HEIGHT,
       columns: 1,
       rows: 1,
       pivot: [0.5, 0.5],
@@ -119,8 +122,8 @@ export async function createArenaRenderer(
     atlases.push(presentationAtlas);
     const presentationLayer = createSprite2DLayer(presentationAtlas);
     const screen = Entry.addPresentationSprite(presentationLayer, {
-      positionPx: [320, 180],
-      sizePx: [640, 360],
+      positionPx: [VIEW_WIDTH / 2, VIEW_HEIGHT / 2],
+      sizePx: [VIEW_WIDTH, VIEW_HEIGHT],
       frame: 0,
     });
     const presenter = createSpriteRenderer(engine, {
@@ -132,32 +135,33 @@ export async function createArenaRenderer(
     registerSpriteRenderer(presenter);
     const pool = [],
       flashes = new Map();
-    let used = 0,
+      let used = 0,
       previous = null,
       effects = [],
       last = performance.now();
     const draw = (frame, x, y, size) => {
+      const [viewX, viewY] = projectPoint(x, y);
       for (const dx of [
         0,
-        ...(x - size / 2 < 0 ? [640] : []),
-        ...(x + size / 2 > 640 ? [-640] : []),
+        ...(viewX - size / 2 < 0 ? [VIEW_WIDTH] : []),
+        ...(viewX + size / 2 > VIEW_WIDTH ? [-VIEW_WIDTH] : []),
       ])
         for (const dy of [
           0,
-          ...(y - size / 2 < 0 ? [360] : []),
-          ...(y + size / 2 > 360 ? [-360] : []),
+          ...(viewY - size / 2 < 0 ? [VIEW_HEIGHT] : []),
+          ...(viewY + size / 2 > VIEW_HEIGHT ? [-VIEW_HEIGHT] : []),
         ]) {
           let sprite = pool[used];
           if (!sprite) {
             sprite = Entry.addSprite(layer, {
-              positionPx: [x + dx, y + dy],
+              positionPx: [viewX + dx, viewY + dy],
               sizePx: [size, size],
               frame,
             });
             pool.push(sprite);
           }
           Entry.update(sprite, {
-            positionPx: [x + dx, y + dy],
+            positionPx: [viewX + dx, viewY + dy],
             sizePx: [size, size],
             frame,
             visible: true,
@@ -169,13 +173,13 @@ export async function createArenaRenderer(
       if (cancelled()) return;
       try {
         resizeEngine(engine);
-        const fit = Math.min(canvas.width / 640, canvas.height / 360);
+        const fit = Math.min(canvas.width / VIEW_WIDTH, canvas.height / VIEW_HEIGHT);
         const scale =
-          canvas.clientWidth >= 640 && canvas.clientHeight >= 360
+          canvas.clientWidth >= VIEW_WIDTH && canvas.clientHeight >= VIEW_HEIGHT
             ? Math.max(1, Math.floor(fit))
             : fit;
-        const w = 640 * scale,
-          h = 360 * scale;
+        const w = VIEW_WIDTH * scale,
+          h = VIEW_HEIGHT * scale;
         Entry.updatePresentationSprite(screen, {
           positionPx: [
             Math.floor((canvas.width - w) / 2) + w / 2,
@@ -212,7 +216,7 @@ export async function createArenaRenderer(
             if (p.connected === false || p.lives <= 0 || p.respawn) continue;
             const n = p.number - 1,
               heading =
-                ((Math.round((p.angle / (Math.PI * 2)) * 32) % 32) + 32) % 32;
+              ((Math.round(((Math.PI / 2 - p.angle) / (Math.PI * 2)) * 32) % 32) + 32) % 32;
             draw(n * 32 + heading + (p.input?.thrust ? 128 : 0), p.x, p.y, 64);
             if (
               p.input?.fire &&

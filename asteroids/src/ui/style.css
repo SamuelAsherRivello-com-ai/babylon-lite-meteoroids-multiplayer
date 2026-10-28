@@ -57,6 +57,27 @@ a:hover {
   position: absolute;
   overflow: hidden;
 }
+.gutter_left {
+  background: #050a16 url("../content/game/art/gutters/left.webp") center / cover no-repeat;
+}
+.gutter_right {
+  background: #050a16 url("../content/game/art/gutters/right.webp") center / cover no-repeat;
+}
+.gutter-border {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 9px;
+  background: linear-gradient(90deg, #12213a, #7c95bf 42%, #202548 72%, #070d16);
+  box-shadow: 0 0 14px #748aff77;
+}
+.gutter_left .gutter-border {
+  right: 0;
+}
+.gutter_right .gutter-border {
+  left: 0;
+  transform: scaleX(-1);
+}
 #viewport {
   position: absolute;
   overflow: hidden;

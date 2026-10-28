@@ -6,8 +6,8 @@ export const aspectRatioPresets = Object.freeze({
 });
 
 export const defaultLayout = Object.freeze({
-  orientation: "landscape",
-  ...aspectRatioPresets.landscape,
+  orientation: "portrait",
+  ...aspectRatioPresets.portrait,
 });
 
 export function validateLayout(layout) {
