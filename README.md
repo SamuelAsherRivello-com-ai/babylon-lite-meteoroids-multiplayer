@@ -8,7 +8,7 @@ An original pixel-art space survival game for **1–4 online cooperative players
 
 ![Current source layout with the square game view on the left and HUD on the right](docs/screenshots/layout-gameplay.png)
 
-The screenshot shows the current source layout. The live demo remains on its previously published version until a release is deployed.
+The screenshot shows the current layout, which is also deployed to the live demo.
 
 Host a flight, copy the invitation, and let friends join during any wave. Guests can leave and rejoin; the creator stays the host. Each pilot has three lives for the whole run. Eliminated pilots spectate surviving teammates. When every connected pilot is eliminated, everyone returns together to wave one after five seconds.
 

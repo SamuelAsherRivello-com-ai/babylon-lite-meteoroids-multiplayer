@@ -49,7 +49,9 @@ The `left-game-right-hud-layout` change was verified locally in headless Microso
 - Layout checks at 1280×720, 844×390, and 390×844 confirmed a square game region, a non-overlapping right panel, no document overflow, and a centered 16:9 arena frame. The fullscreen settings control entered fullscreen with the same non-overlapping layout.
 - At DPR 2, a 390×219 CSS-pixel arena canvas used a 780×438 backing store.
 - The two-client transition scenario verified ArrowLeft/ArrowUp/Space controls, concurrent rotate/thrust/fire touch input and cancellation, natural wave progression, spectator continuity, collective reset, and creator departure. The host reached wave two with score 800 and three lives; the reset restored both players to three lives and zero score.
-- `npm test` passed all eight tests, the production build passed, and the OpenSpec change passed strict validation. Local Node was v26.7; Node 24 CI and public Pages checks were not rerun for this unreleased layout change.
+- `npm test` passed all eight tests, the production build passed, and the OpenSpec change passed strict validation. Local checks used Node v26.7.
+- GitHub Pages run [40640153951](https://github.com/SamuelAsherRivello-com-ai/babylon-lite-meteoroids-multiplayer/actions/runs/40640153951) deployed commit `146ec7de54b74d8e7e0be7e5a89801ed5542732c` successfully. Its Node 24 job passed 11 tests, TypeScript configuration checking, the production build, and all 11 production asset-path checks.
+- The published page at [the live game URL](https://samuelasherrivello-com-ai.github.io/babylon-lite-meteoroids-multiplayer/) returned HTTP 200 with version `0.1.2`. Headless Edge at 844×390 confirmed a 390×390 square game region, centered 390×219.375 arena, right HUD, WebGPU availability, no page errors, and no document overflow.
 
-`layout-gameplay.png` is the current source screenshot. The public screenshots and live game above remain evidence for their already released layouts until a later release is deployed.
+`layout-gameplay.png` is the current source screenshot and matches the deployed layout. Earlier public screenshots above remain historical evidence of their captured layouts.
 
